@@ -23,6 +23,11 @@ python integration/demo_scenario.py     # the whole platform, end to end
 | **CNC 419** | [GRC platform](cnc419-grc/README.md) | `python cnc419-grc/cli.py` | 66 cross-framework mappings, 3 conflicts, live risk updates |
 | **Bonus** | [Integration](integration/README.md) | `python integration/demo_scenario.py` | GRC→Red→Blue→GRC with full traceability |
 
+> **SOC console dashboard:** `python integration/dashboard/build_dashboard.py` →
+> open [`integration/dashboard/dashboard.html`](integration/dashboard/README.md) for a
+> dark, single-page view of a whole exercise (findings, incidents, risk register,
+> confusion matrix, conflicts, traceability).
+
 ## What makes it one platform
 
 ```

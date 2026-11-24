@@ -100,5 +100,6 @@ own or have written authorisation to test.
 ## Submission paperwork
 
 Templates for the three due documents (individual background, team contract,
-proposal) are in [`docs/paperwork/`](docs/paperwork/README.md) — only identity
-fields need completing.
+proposal) are in [`docs/paperwork/`](docs/paperwork/README.md), and the three
+8–10 page **technical reports** (one per course) are in
+[`docs/reports/`](docs/reports/README.md) — only identity fields need completing.

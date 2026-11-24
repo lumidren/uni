@@ -105,6 +105,10 @@ class Handler(BaseHTTPRequestHandler):
                 rows = [p for p in _PRODUCTS if q.lower() in p["name"].lower()]
             return self._json(200, {"query": q, "rows": rows, "count": len(rows)})
 
+        if path == "/chat":
+            # Exists but is POST-only; 405 (not 404) so recon can discover it.
+            return self._json(405, {"error": "method not allowed, use POST"})
+
         if path.startswith("/api/basket/"):
             basket_id = path.rsplit("/", 1)[-1]
             # VULN (IDOR): any id is returned with NO authorisation check.

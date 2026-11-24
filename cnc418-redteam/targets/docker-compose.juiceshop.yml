@@ -1,0 +1,15 @@
+# Graded demo target: OWASP Juice Shop, bound to loopback ONLY.
+#
+#   docker compose -f targets/docker-compose.juiceshop.yml up -d
+#   # agent then runs against http://127.0.0.1:3000
+#
+# The "127.0.0.1:" prefix on the port mapping is deliberate: the container is
+# reachable only from this machine, which keeps it inside the CNC 418 allowlist.
+services:
+  juiceshop:
+    image: bkimminich/juice-shop:v17.1.1
+    container_name: cnc418-juiceshop
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+    # Juice Shop is intentionally vulnerable — never expose it off localhost.

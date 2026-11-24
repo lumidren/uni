@@ -55,10 +55,15 @@ def verify_reflected_xss(tx: Transport, base_url: str, path: str = "/search", pa
     raw_marker = f"<{token}>"
     url = f"{base_url}{path}?{param}={quote(raw_marker)}"
     resp = tx.get(url)
-    if raw_marker in resp.body:
+    ctype = next((v for k, v in resp.headers.items() if k.lower() == "content-type"), "").lower()
+    # Reflection only counts as XSS in an HTML context. A marker echoed inside a
+    # JSON body (application/json) is NOT script injection, so we reject it —
+    # this is exactly the kind of false positive the anti-hallucination gate
+    # must catch.
+    if raw_marker in resp.body and "html" in ctype:
         return Proof(
             method="reflected_marker",
-            evidence=f"marker {raw_marker!r} reflected un-escaped in response body (output not encoded)",
+            evidence=f"marker {raw_marker!r} reflected un-escaped in an HTML response (output not encoded)",
             request=f"GET {path}?{param}=<marker>",
             observed_at=utc_now_iso(),
         )

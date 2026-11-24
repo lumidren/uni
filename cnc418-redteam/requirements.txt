@@ -1,0 +1,17 @@
+# The core agent is STDLIB-ONLY on purpose (urllib, http.server, ipaddress,
+# dataclasses). You can run everything in this project with a bare Python 3.10+.
+#
+# The packages below are OPTIONAL and only enable extras:
+
+# Strict JSON-Schema validation of cross-course payloads (otherwise a
+# dependency-free fallback validator is used).
+jsonschema>=4.18
+
+# OPTIONAL — only if you wire the pluggable LLM planner to a real backend.
+# The default planner is deterministic and needs none of these.
+# openai>=1.0
+# anthropic>=0.39
+
+# OPTIONAL — headless-browser verification for DOM-based XSS against Juice Shop.
+# The stdlib verifiers already cover reflected/stored markers without it.
+# playwright>=1.44

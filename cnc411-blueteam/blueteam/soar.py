@@ -19,6 +19,7 @@ from typing import Optional
 
 # Which technique maps to which containment verb (vendor-neutral).
 _TECHNIQUE_ACTION = {
+    "T1190": "block_ip",           # exploit public-facing app -> block the source
     "T1110.003": "block_ip",       # password spraying -> block source
     "T1558.003": "disable_account",  # kerberoasting -> disable targeted/service acct
     "T1071.004": "block_ip",       # DNS tunnelling -> block exfil channel
@@ -26,6 +27,7 @@ _TECHNIQUE_ACTION = {
     "T1053": "isolate_host",
     "T1557.002": "block_ip",       # ARP poisoning -> block/quarantine port
     "T1078": "disable_account",
+    "T1059.007": "block_ip",       # malicious JS/XSS source -> block
 }
 
 # Actions considered high-impact (need approval on critical assets).

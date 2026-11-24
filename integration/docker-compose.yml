@@ -1,0 +1,33 @@
+# Full-platform compose (loopback-bound). The offline demos need NO Docker —
+# this is for running the live wire-protocol between subsystems.
+#
+#   docker compose -f integration/docker-compose.yml up -d
+#   # GRC API  -> http://127.0.0.1:4190
+#   # Juice Shop (Red target) -> http://127.0.0.1:3000
+#   python integration/demo_scenario.py
+#
+# All ports are pinned to 127.0.0.1 so nothing is exposed off the machine
+# (keeps the Red Team allowlist satisfied).
+services:
+  grc-api:
+    image: python:3.12-slim
+    container_name: cap-grc-api
+    working_dir: /app
+    volumes:
+      - ..:/app
+    command: python cnc419-grc/cli.py --serve --port 4190
+    ports:
+      - "127.0.0.1:4190:4190"
+    restart: unless-stopped
+
+  juiceshop:
+    image: bkimminich/juice-shop:v17.1.1
+    container_name: cap-juiceshop
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+    # Intentionally vulnerable training target — never expose off localhost.
+
+# Red and Blue run as one-shot jobs against the two services above:
+#   python cnc418-redteam/cli.py --target http://127.0.0.1:3000 --grc-url http://127.0.0.1:4190 --publish --blue-url ...
+#   python cnc411-blueteam/cli.py --grc-assets integration/mock_payloads/assets_profile.json

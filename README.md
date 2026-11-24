@@ -103,3 +103,7 @@ Templates for the three due documents (individual background, team contract,
 proposal) are in [`docs/paperwork/`](docs/paperwork/README.md), and the three
 8–10 page **technical reports** (one per course) are in
 [`docs/reports/`](docs/reports/README.md) — only identity fields need completing.
+
+**Defending it:** [`docs/DEFENSE_GUIDE.md`](docs/DEFENSE_GUIDE.md) — the pitch, a
+live-demo runbook, the design decisions to defend, and a TA Q&A bank with ready
+answers.

@@ -1,0 +1,79 @@
+{
+  "exercise_run_id": "run-20261124-9f8e7d",
+  "scenarios": [
+    {
+      "name": "ad_credential_attack",
+      "stages": [
+        {
+          "target_asset": "asset-ad-dc01", "asset_os": "windows", "mitre_hint": "T1110.003",
+          "src_ip": "10.10.5.66", "containment_target": "10.10.5.66", "fw_vendor": "fortigate",
+          "detect_latency_s": 12.5, "contain_latency_s": 6.0, "recover_latency_s": 70.0,
+          "features": {"auth_failures_5m": 28, "distinct_targets_5m": 19, "off_hours": 1,
+                       "kerberos_ticket_rate": 1, "dns_query_entropy": 2.1, "dns_bytes_out_kb": 1.2,
+                       "sudo_cmd_anomaly": 0, "lateral_conn_count": 2, "new_account_flag": 0}
+        },
+        {
+          "target_asset": "asset-ad-dc01", "asset_os": "windows", "mitre_hint": "T1558.003",
+          "containment_target": "svc-sql", "detect_latency_s": 22.0, "contain_latency_s": 9.0, "recover_latency_s": 110.0,
+          "features": {"auth_failures_5m": 3, "distinct_targets_5m": 10, "off_hours": 1,
+                       "kerberos_ticket_rate": 16, "dns_query_entropy": 2.0, "dns_bytes_out_kb": 1.0,
+                       "sudo_cmd_anomaly": 0, "lateral_conn_count": 3, "new_account_flag": 0}
+        },
+        {
+          "target_asset": "asset-ad-dc01", "asset_os": "windows", "mitre_hint": "T1078",
+          "containment_target": "corp\\\\jdoe", "detect_latency_s": 30.0, "contain_latency_s": 11.0, "recover_latency_s": 140.0,
+          "features": {"auth_failures_5m": 2, "distinct_targets_5m": 3, "off_hours": 1,
+                       "kerberos_ticket_rate": 2, "dns_query_entropy": 2.0, "dns_bytes_out_kb": 1.0,
+                       "sudo_cmd_anomaly": 0, "lateral_conn_count": 15, "new_account_flag": 1}
+        }
+      ]
+    },
+    {
+      "name": "linux_privilege_escalation",
+      "stages": [
+        {
+          "target_asset": "asset-lin-web01", "asset_os": "linux", "mitre_hint": "T1110.003",
+          "src_ip": "10.10.9.21", "containment_target": "10.10.9.21", "fw_vendor": "cisco_asa",
+          "detect_latency_s": 10.0, "contain_latency_s": 5.0, "recover_latency_s": 60.0,
+          "features": {"auth_failures_5m": 11, "distinct_targets_5m": 4, "off_hours": 1,
+                       "kerberos_ticket_rate": 0, "dns_query_entropy": 2.0, "dns_bytes_out_kb": 1.0,
+                       "sudo_cmd_anomaly": 1, "lateral_conn_count": 2, "new_account_flag": 0}
+        },
+        {
+          "target_asset": "asset-lin-web01", "asset_os": "linux", "mitre_hint": "T1548.003",
+          "containment_target": "asset-lin-web01", "detect_latency_s": 18.0, "contain_latency_s": 8.0, "recover_latency_s": 95.0,
+          "features": {"auth_failures_5m": 5, "distinct_targets_5m": 2, "off_hours": 1,
+                       "kerberos_ticket_rate": 0, "dns_query_entropy": 2.0, "dns_bytes_out_kb": 1.0,
+                       "sudo_cmd_anomaly": 6, "lateral_conn_count": 3, "new_account_flag": 1}
+        }
+      ]
+    },
+    {
+      "name": "dns_tunnel_exfil",
+      "stages": [
+        {
+          "target_asset": "asset-lin-web01", "asset_os": "linux", "mitre_hint": "T1071.004",
+          "src_ip": "10.10.9.21", "containment_target": "10.10.9.21", "fw_vendor": "fortigate",
+          "detect_latency_s": 16.0, "contain_latency_s": 4.0, "recover_latency_s": 50.0,
+          "features": {"auth_failures_5m": 1, "distinct_targets_5m": 1, "off_hours": 0,
+                       "kerberos_ticket_rate": 0, "dns_query_entropy": 4.2, "dns_bytes_out_kb": 90,
+                       "sudo_cmd_anomaly": 0, "lateral_conn_count": 2, "new_account_flag": 0}
+        }
+      ]
+    },
+    {
+      "name": "concept_drift_low_and_slow_spray",
+      "stages": [
+        {
+          "target_asset": "asset-lin-web01", "asset_os": "linux", "mitre_hint": "T1110.003",
+          "exercise_run_id": "run-20261124-drift99",
+          "src_ip": "10.10.9.90", "containment_target": "10.10.9.90",
+          "detect_latency_s": 40.0, "contain_latency_s": 10.0, "recover_latency_s": 120.0,
+          "features": {"auth_failures_5m": 5, "distinct_targets_5m": 11, "off_hours": 1,
+                       "kerberos_ticket_rate": 0, "dns_query_entropy": 2.0, "dns_bytes_out_kb": 1.0,
+                       "sudo_cmd_anomaly": 0, "lateral_conn_count": 2, "new_account_flag": 0}
+        }
+      ]
+    }
+  ]
+}

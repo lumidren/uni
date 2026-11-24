@@ -1,0 +1,16 @@
+# The Blue Team pipeline is STDLIB-ONLY (pure-Python logistic regression,
+# json, dataclasses). A bare Python 3.10+ runs everything, including the
+# confusion-matrix evaluation.
+#
+# Optional extras:
+
+# Strict cross-course payload validation (else a dependency-free fallback is used).
+jsonschema>=4.18
+
+# OPTIONAL — only if you swap the deterministic triage for a real LLM/RAG backend.
+# openai>=1.0
+# anthropic>=0.39
+
+# OPTIONAL — if you prefer scikit-learn's classifier over the built-in one for
+# benchmarking. The built-in detector needs none of this.
+# scikit-learn>=1.3

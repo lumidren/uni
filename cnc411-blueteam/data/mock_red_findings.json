@@ -1,0 +1,18 @@
+[
+  {
+    "finding_id": "find-a1b2c3",
+    "exercise_run_id": "run-20261124-9f8e7d",
+    "target_asset": "asset-ad-dc01",
+    "cwe_id": "CWE-307",
+    "stride_category": "spoofing",
+    "mitre_technique_id": "T1110.003",
+    "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+    "exploit_status": "verified",
+    "verified_poc": {"method": "auth_state_change", "evidence": "valid session obtained after spray against 19 accounts"},
+    "chain": [
+      {"step": 1, "name": "Password spray", "mitre_technique_id": "T1110.003", "cwe_id": "CWE-307", "exploit_status": "verified", "enables": "one valid credential"},
+      {"step": 2, "name": "Kerberoast service account", "mitre_technique_id": "T1558.003", "cwe_id": "CWE-522", "exploit_status": "verified", "enables": "offline-crackable TGS hash"},
+      {"step": 3, "name": "Reuse valid account for lateral movement", "mitre_technique_id": "T1078", "cwe_id": "CWE-287", "exploit_status": "verified", "enables": "access to additional hosts"}
+    ]
+  }
+]

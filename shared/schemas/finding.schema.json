@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lumidren/uni/shared/schemas/finding.schema.json",
+  "title": "Finding",
+  "description": "Emitted by the CNC 418 Red Team via POST /api/v1/findings. Consumed by the CNC 411 Blue Team (correlation + virtual-patch validation) and the CNC 419 GRC platform (risk elevation). Only findings with exploit_status='verified' are allowed to carry weight downstream.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "finding_id",
+    "exercise_run_id",
+    "target_asset",
+    "cwe_id",
+    "stride_category",
+    "mitre_technique_id",
+    "cvss_vector",
+    "exploit_status",
+    "verified_poc"
+  ],
+  "properties": {
+    "finding_id": {
+      "type": "string",
+      "description": "Unique id for this finding, e.g. 'find-a1b2c3'.",
+      "pattern": "^find-[0-9a-zA-Z_-]+$"
+    },
+    "exercise_run_id": {
+      "type": "string",
+      "description": "Correlation id for the whole Purple Team exercise. Also carried on the wire as the X-Exercise-Run-ID header.",
+      "pattern": "^run-[0-9a-zA-Z_-]+$"
+    },
+    "target_asset": {
+      "type": "string",
+      "description": "asset_id this finding was proven against (joins back to the GRC AssetProfile)."
+    },
+    "cwe_id": {
+      "type": "string",
+      "description": "CWE identifier, e.g. 'CWE-89'.",
+      "pattern": "^CWE-[0-9]+$"
+    },
+    "stride_category": {
+      "type": "string",
+      "enum": ["spoofing", "tampering", "repudiation", "information_disclosure", "denial_of_service", "elevation_of_privilege"]
+    },
+    "mitre_technique_id": {
+      "type": "string",
+      "description": "MITRE ATT&CK technique id, e.g. 'T1190'.",
+      "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+    },
+    "cvss_vector": {
+      "type": "string",
+      "description": "CVSS v3.1 vector string.",
+      "pattern": "^CVSS:3\\.1/.*"
+    },
+    "exploit_status": {
+      "type": "string",
+      "description": "verified = programmatically proven (anti-hallucination gate passed). rejected = the agent claimed it but verification failed, so it must NOT count. suspected = awaiting verification.",
+      "enum": ["verified", "rejected", "suspected"]
+    },
+    "verified_poc": {
+      "type": "object",
+      "description": "Reproducible proof-of-exploitation evidence. This is what separates a real finding from an LLM hallucination.",
+      "additionalProperties": true,
+      "required": ["method", "evidence"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "How the exploit was confirmed.",
+          "enum": ["headless_dom_callback", "boolean_blind_inference", "time_blind_inference", "oob_interaction", "reflected_marker", "auth_state_change", "object_access_delta"]
+        },
+        "evidence": {
+          "type": "string",
+          "description": "The deterministic signal observed (marker string echoed, timing delta, OOB hit id, row count delta, etc.)."
+        },
+        "request": {"type": "string", "description": "Sanitised request that triggered the proof."},
+        "observed_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "chain": {
+      "type": "array",
+      "description": "For a multi-step attack chain, the ordered sequence of steps. A chained finding represents the sequence, not a single flat record. Each step is only counted complete once its own verification passes.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["step", "name", "mitre_technique_id", "exploit_status"],
+        "properties": {
+          "step": {"type": "integer", "minimum": 1},
+          "name": {"type": "string"},
+          "mitre_technique_id": {"type": "string", "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"},
+          "cwe_id": {"type": "string", "pattern": "^CWE-[0-9]+$"},
+          "exploit_status": {"type": "string", "enum": ["verified", "rejected", "suspected"]},
+          "verified_poc": {"type": "object"},
+          "enables": {"type": "string", "description": "What this step unlocked for the next link (token, id, path, privilege)."}
+        }
+      }
+    }
+  }
+}

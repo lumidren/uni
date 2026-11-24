@@ -1,0 +1,45 @@
+{
+  "finding_id": "find-a1b2c3",
+  "exercise_run_id": "run-20261124-9f8e7d",
+  "target_asset": "asset-0007",
+  "cwe_id": "CWE-89",
+  "stride_category": "tampering",
+  "mitre_technique_id": "T1190",
+  "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+  "exploit_status": "verified",
+  "verified_poc": {
+    "method": "boolean_blind_inference",
+    "evidence": "payload \"' OR 1=1-- -\" returned 12 rows vs \"' OR 1=2-- -\" returned 0 rows (deterministic boolean delta)",
+    "request": "GET /rest/products/search?q=<redacted-marker> HTTP/1.1",
+    "observed_at": "2026-11-24T10:32:11Z"
+  },
+  "chain": [
+    {
+      "step": 1,
+      "name": "SQL injection in product search",
+      "mitre_technique_id": "T1190",
+      "cwe_id": "CWE-89",
+      "exploit_status": "verified",
+      "enables": "dumped admin password hash + email",
+      "verified_poc": {"method": "boolean_blind_inference", "evidence": "row-count delta confirmed"}
+    },
+    {
+      "step": 2,
+      "name": "Authenticate as admin with recovered credential",
+      "mitre_technique_id": "T1078",
+      "cwe_id": "CWE-287",
+      "exploit_status": "verified",
+      "enables": "valid admin JWT",
+      "verified_poc": {"method": "auth_state_change", "evidence": "GET /rest/user/whoami returned role=admin"}
+    },
+    {
+      "step": 3,
+      "name": "IDOR on basket to read another user's order",
+      "mitre_technique_id": "T1083",
+      "cwe_id": "CWE-639",
+      "exploit_status": "verified",
+      "enables": "cross-tenant data read",
+      "verified_poc": {"method": "object_access_delta", "evidence": "basket id 1 returned items owned by a different user id"}
+    }
+  ]
+}

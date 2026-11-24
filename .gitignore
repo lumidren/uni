@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+*.local.env
+.env.*
+!.env.example
+
+# Data / runtime artifacts
+*.log
+*.sqlite
+*.db
+runs/
+out/
+artifacts/
+*.sarif.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Vector store caches
+.chroma/
+*.faiss
+embeddings_cache/

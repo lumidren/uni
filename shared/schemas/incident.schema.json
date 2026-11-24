@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lumidren/uni/shared/schemas/incident.schema.json",
+  "title": "Incident",
+  "description": "Emitted by the CNC 411 Blue Team via POST /api/v1/incidents. Consumed by the CNC 419 GRC platform to recalculate residual risk and drive the After-Action Review. Carries the containment KPIs (MTTD/MTTC/MTTR).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "incident_id",
+    "exercise_run_id",
+    "target_asset",
+    "mitre_technique_id",
+    "mttd_sec",
+    "mttc_sec",
+    "mttr_sec",
+    "containment_action",
+    "residual_status"
+  ],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^inc-[0-9a-zA-Z_-]+$"
+    },
+    "exercise_run_id": {
+      "type": "string",
+      "description": "Same correlation id as the Red Team finding it responds to.",
+      "pattern": "^run-[0-9a-zA-Z_-]+$"
+    },
+    "target_asset": {
+      "type": "string",
+      "description": "asset_id the incident was raised on (joins back to the GRC AssetProfile)."
+    },
+    "mitre_technique_id": {
+      "type": "string",
+      "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+    },
+    "mttd_sec": {
+      "type": "number",
+      "description": "Mean Time To Detect: seconds from first malicious telemetry to alert.",
+      "minimum": 0
+    },
+    "mttc_sec": {
+      "type": "number",
+      "description": "Mean Time To Contain: seconds from alert to containment action taken.",
+      "minimum": 0
+    },
+    "mttr_sec": {
+      "type": "number",
+      "description": "Mean Time To Recover/Remediate: seconds from detection to restored-safe state.",
+      "minimum": 0
+    },
+    "containment_action": {
+      "type": "string",
+      "description": "Vendor-neutral containment verb that was executed (or proposed for human approval).",
+      "enum": ["block_ip", "isolate_host", "disable_account", "kill_session", "quarantine_file", "none", "pending_human_approval"]
+    },
+    "residual_status": {
+      "type": "string",
+      "description": "State of the threat after response.",
+      "enum": ["contained", "mitigated", "partially_contained", "escalated", "open"]
+    },
+    "linked_finding_id": {
+      "type": "string",
+      "description": "Optional back-reference to the Red Team finding_id this incident correlated to.",
+      "pattern": "^find-[0-9a-zA-Z_-]+$"
+    },
+    "explanation": {
+      "type": "object",
+      "description": "Required XAI payload. A bare confidence score is NOT an acceptable substitute for an evidence-backed explanation.",
+      "additionalProperties": true,
+      "properties": {
+        "top_features": {"type": "array", "items": {"type": "string"}},
+        "evidence": {"type": "array", "items": {"type": "string"}},
+        "rationale": {"type": "string"},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "incident_id": "inc-7h6g5f",
+  "exercise_run_id": "run-20261124-9f8e7d",
+  "target_asset": "asset-0007",
+  "mitre_technique_id": "T1190",
+  "mttd_sec": 14.2,
+  "mttc_sec": 31.8,
+  "mttr_sec": 95.0,
+  "containment_action": "block_ip",
+  "residual_status": "contained",
+  "linked_finding_id": "find-a1b2c3",
+  "explanation": {
+    "top_features": ["req_rate_per_min=180", "sql_meta_chars_in_query=true", "4xx_ratio=0.62"],
+    "evidence": [
+      "18 requests in 6s to /rest/products/search carrying SQL meta-characters",
+      "source ip tagged with X-Exercise-Run-ID run-20261124-9f8e7d",
+      "matches Red Team finding find-a1b2c3 (CWE-89)"
+    ],
+    "rationale": "Burst of boolean-style SQLi probes against a tier1_critical asset; correlated to a verified Red Team finding, so severity escalated and auto-block fired.",
+    "confidence": 0.93
+  }
+}

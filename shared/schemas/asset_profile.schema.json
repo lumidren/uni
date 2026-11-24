@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lumidren/uni/shared/schemas/asset_profile.schema.json",
+  "title": "AssetProfile",
+  "description": "Published by the CNC 419 GRC platform via GET /api/v1/assets/profile. Consumed by the CNC 418 Red Team (to prioritise high-value targets) and the CNC 411 Blue Team (to weight alert severity).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_id",
+    "ip_or_url",
+    "criticality_tier",
+    "mtd_minutes",
+    "rpo_minutes",
+    "applicable_standards"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "description": "Stable enterprise identifier, e.g. 'asset-0007'.",
+      "pattern": "^asset-[0-9a-zA-Z_-]+$"
+    },
+    "ip_or_url": {
+      "type": "string",
+      "description": "Where the asset lives in the lab. MUST resolve to the Red Team target allowlist (localhost / 127.0.0.1 / approved lab subnet)."
+    },
+    "criticality_tier": {
+      "type": "string",
+      "description": "Business criticality. Drives Red Team prioritisation and Blue Team severity weighting.",
+      "enum": ["tier1_critical", "tier2_high", "tier3_moderate", "tier4_low"]
+    },
+    "mtd_minutes": {
+      "type": "integer",
+      "description": "Maximum Tolerable Downtime in minutes. Must satisfy RTO + WRT <= MTD in the GRC BIA validator.",
+      "minimum": 0
+    },
+    "rpo_minutes": {
+      "type": "integer",
+      "description": "Recovery Point Objective in minutes. Independent data-loss bound (NOT part of the RTO/WRT/MTD timeline).",
+      "minimum": 0
+    },
+    "applicable_standards": {
+      "type": "array",
+      "description": "Frameworks this asset is in scope for.",
+      "items": {
+        "type": "string",
+        "examples": ["ISO_27001", "ISO_42001", "PCI_DSS", "GDPR", "NIST_800_53", "EGYPT_PDPL"]
+      },
+      "minItems": 1
+    }
+  }
+}

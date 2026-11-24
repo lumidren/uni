@@ -1,0 +1,8 @@
+{
+  "asset_id": "asset-0007",
+  "ip_or_url": "http://127.0.0.1:3000",
+  "criticality_tier": "tier1_critical",
+  "mtd_minutes": 240,
+  "rpo_minutes": 60,
+  "applicable_standards": ["ISO_27001", "PCI_DSS", "EGYPT_PDPL"]
+}

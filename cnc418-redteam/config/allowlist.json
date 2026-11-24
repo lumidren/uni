@@ -1,0 +1,5 @@
+{
+  "_comment": "Target allowlist config. By default ONLY loopback is reachable. To use an instructor-approved lab subnet, add it under lab_networks. Public/globally-routable ranges are ALWAYS refused by redteam/allowlist.py regardless of what is written here.",
+  "lab_networks": [],
+  "_example_lab_networks": ["192.168.56.0/24", "10.10.0.0/16"]
+}

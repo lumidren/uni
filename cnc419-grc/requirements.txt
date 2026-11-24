@@ -1,0 +1,16 @@
+# The GRC platform is STDLIB-ONLY (a pure-Python TF-IDF retriever, http.server,
+# json, dataclasses). A bare Python 3.10+ runs the full walkthrough and the
+# bridge API.
+#
+# Optional extras:
+
+# Strict cross-course payload validation (else a dependency-free fallback is used).
+jsonschema>=4.18
+
+# OPTIONAL — swap the TF-IDF retriever for dense embeddings + a vector DB.
+# chromadb>=0.5
+# sentence-transformers>=3.0
+
+# OPTIONAL — real LLM for requirement extraction / mapping narration.
+# openai>=1.0
+# anthropic>=0.39

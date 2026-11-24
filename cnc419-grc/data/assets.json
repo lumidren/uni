@@ -1,0 +1,34 @@
+[
+  {
+    "asset_id": "asset-0007",
+    "ip_or_url": "http://127.0.0.1:3000",
+    "criticality_tier": "tier1_critical",
+    "mtd_minutes": 240,
+    "rpo_minutes": 60,
+    "applicable_standards": ["ISO_27001", "PCI_DSS", "EGYPT_PDPL"]
+  },
+  {
+    "asset_id": "asset-ad-dc01",
+    "ip_or_url": "10.10.5.10",
+    "criticality_tier": "tier1_critical",
+    "mtd_minutes": 120,
+    "rpo_minutes": 30,
+    "applicable_standards": ["ISO_27001", "NIST_800_53"]
+  },
+  {
+    "asset_id": "asset-lin-web01",
+    "ip_or_url": "10.10.9.20",
+    "criticality_tier": "tier2_high",
+    "mtd_minutes": 240,
+    "rpo_minutes": 60,
+    "applicable_standards": ["PCI_DSS", "EGYPT_PDPL"]
+  },
+  {
+    "asset_id": "asset-fw-edge",
+    "ip_or_url": "10.10.0.1",
+    "criticality_tier": "tier3_moderate",
+    "mtd_minutes": 480,
+    "rpo_minutes": 120,
+    "applicable_standards": ["ISO_27001"]
+  }
+]
